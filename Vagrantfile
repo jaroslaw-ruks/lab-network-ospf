@@ -7,8 +7,7 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
         v.vm.box = vm_box   
         v.vm.network "public_network",bridge:"wlp3s0"
         v.vm.network "private_network", ip:"192.168.210.1", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l1"
-        v.vm.hostname = "ospf-r1-l1"
-        
+        v.vm.hostname = "ospf-r1-l1"        
         v.vm.provider "virtualbox" do |node|
             node.name = "ospf router r1-l1"
             node.cpus = 1
@@ -67,56 +66,58 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
         end
         v.vm.provision "shell", path:"./scripts/routers_part1.sh"
     end
-    config.vm.define "ospf-c1-l1" do |v|
-        v.vm.box = vm_box
-        v.vm.network "private_network", ip:"192.168.210.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l1"
-        v.vm.hostname = "ospf-c1-l1"
-        v.vm.provider "virtualbox" do |node|
-            node.name = "ospf client r1-l2"
-            node.cpus = 1
-            node.memory = 512
-            node.gui = false
-            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
-            node.customize ["modifyvm",:id,"--groups","/ospf"]
+    if ENV["c"] && ENV["c"]="1"
+        config.vm.define "ospf-c1-l1" do |v|
+            v.vm.box = vm_box
+            v.vm.network "private_network", ip:"192.168.210.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l1"
+            v.vm.hostname = "ospf-c1-l1"
+            v.vm.provider "virtualbox" do |node|
+                node.name = "ospf client r1-l2"
+                node.cpus = 1
+                node.memory = 512
+                node.gui = false
+                node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
+                node.customize ["modifyvm",:id,"--groups","/ospf"]
+            end
         end
-    end
-    config.vm.define "ospf-c1-l2" do |v|
-        v.vm.box = vm_box
-        v.vm.network "private_network", ip:"192.168.221.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l2-1"
-        v.vm.hostname = "ospf-c1-l2"
-        v.vm.provider "virtualbox" do |node|
-            node.name = "ospf client c1-l2"
-            node.cpus = 1
-            node.memory = 512
-            node.gui = false
-            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
-            node.customize ["modifyvm",:id,"--groups","/ospf"]
+        config.vm.define "ospf-c1-l2" do |v|
+            v.vm.box = vm_box
+            v.vm.network "private_network", ip:"192.168.221.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l2-1"
+            v.vm.hostname = "ospf-c1-l2"
+            v.vm.provider "virtualbox" do |node|
+                node.name = "ospf client c1-l2"
+                node.cpus = 1
+                node.memory = 512
+                node.gui = false
+                node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
+                node.customize ["modifyvm",:id,"--groups","/ospf"]
+            end
         end
-    end
-    config.vm.define "ospf-c2-l2" do |v|
-        v.vm.box = vm_box
-        v.vm.network "private_network", ip:"192.168.222.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l2-2"
-        v.vm.hostname = "ospf-c2-l2"
-        v.vm.provider "virtualbox" do |node|
-            node.name = "ospf client c2-l2"
-            node.cpus = 1
-            node.memory = 512
-            node.gui = false
-            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
-            node.customize ["modifyvm",:id,"--groups","/ospf"]
+        config.vm.define "ospf-c2-l2" do |v|
+            v.vm.box = vm_box
+            v.vm.network "private_network", ip:"192.168.222.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l2-2"
+            v.vm.hostname = "ospf-c2-l2"
+            v.vm.provider "virtualbox" do |node|
+                node.name = "ospf client c2-l2"
+                node.cpus = 1
+                node.memory = 512
+                node.gui = false
+                node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
+                node.customize ["modifyvm",:id,"--groups","/ospf"]
+            end
         end
-    end
-    config.vm.define "ospf-c1-l3" do |v|
-        v.vm.box = vm_box
-        v.vm.network "private_network", ip:"192.168.231.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l3-1"
-        v.vm.hostname = "ospf-c1-l3"
-        v.vm.provider "virtualbox" do |node|
-            node.name = "ospf client c1-l3"
-            node.cpus = 1
-            node.memory = 512
-            node.gui = false
-            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
-            node.customize ["modifyvm",:id,"--groups","/ospf"]
+        config.vm.define "ospf-c1-l3" do |v|
+            v.vm.box = vm_box
+            v.vm.network "private_network", ip:"192.168.231.101", netmask:"255.255.0.0", virtualbox__intnet: "ospf-network-l3-1"
+            v.vm.hostname = "ospf-c1-l3"
+            v.vm.provider "virtualbox" do |node|
+                node.name = "ospf client c1-l3"
+                node.cpus = 1
+                node.memory = 512
+                node.gui = false
+                node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
+                node.customize ["modifyvm",:id,"--groups","/ospf"]
+            end
         end
     end
 end
