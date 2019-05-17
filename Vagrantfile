@@ -16,7 +16,8 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
             node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
             node.customize ["modifyvm",:id,"--groups","/ospf"]
         end
-        v.vm.provision "shell", path:"./scripts/routers_part1.sh"
+        v.vm.provision "shell", 
+        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
       #  config.vm.provision "chef_solo" do |chef|
       #      chef.add_recipe "apache" 
       #  end
@@ -34,7 +35,8 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
             node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
             node.customize ["modifyvm",:id,"--groups","/ospf"]
         end
-        v.vm.provision "shell", path:"./scripts/routers_part1.sh"
+        v.vm.provision "shell", 
+        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
     end
     config.vm.define "ospf-r2-l2" do |v|
         v.vm.box = vm_box
@@ -49,7 +51,8 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
             node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
             node.customize ["modifyvm",:id,"--groups","/ospf"]
         end
-        v.vm.provision "shell", path:"./scripts/routers_part1.sh"
+        v.vm.provision "shell", 
+        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
     end
     config.vm.define "ospf-r1-l3" do |v|
         v.vm.box = vm_box
@@ -64,7 +67,8 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
             node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
             node.customize ["modifyvm",:id,"--groups","/ospf"]
         end
-        v.vm.provision "shell", path:"./scripts/routers_part1.sh"
+        v.vm.provision "shell", 
+        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
     end
     if ENV["c"] && ENV["c"]="1"
         config.vm.define "ospf-c1-l1" do |v|
