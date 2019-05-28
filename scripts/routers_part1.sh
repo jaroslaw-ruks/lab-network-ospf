@@ -6,4 +6,4 @@ sysctl -p /etc/sysctl.conf
 #systemctl restart networking.service
 apt-get update
 apt-get install bird vim tcpdump -y
-/bin/sh /vagrant/scripts/$HOSTNAME.sh > /tmp/log 2>&1
+/bin/sh /vagrant/scripts/$(hostname).sh > /tmp/log 2>&1
