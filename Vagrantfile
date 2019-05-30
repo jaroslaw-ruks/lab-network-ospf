@@ -1,5 +1,6 @@
 c = ENV["c"] ? ENV["c"]=="1" ? c=1 : c=0 : c=0
 r = ENV["r"] ? ENV["r"]=="1" ? r=1 : r=0 : r=1
+s = ENV["s"] ? ENV["s"]=="1" ? s=1 : s=0 : s=0
 
 VAGRANT_API_VERSION = "2"
 #vm_box = "bento/ubuntu-16.04"
@@ -20,8 +21,10 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
 	            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
 	            node.customize ["modifyvm",:id,"--groups","/ospf"]
 	        end
-	        v.vm.provision "shell", 
-	        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	        if s==1
+	        	v.vm.provision "shell", 
+	        	inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	        end
 	      #  config.vm.provision "chef_solo" do |chef|
 	      #      chef.add_recipe "apache" 
 	      #  end
@@ -39,8 +42,10 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
 	            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
 	            node.customize ["modifyvm",:id,"--groups","/ospf"]
 	        end
-	        v.vm.provision "shell", 
-	        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	        if s==1
+	        	v.vm.provision "shell", 
+	        	inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	        end
 	    end
 	    config.vm.define "ospf-r2-l2" do |v|
 	        v.vm.box = vm_box
@@ -55,8 +60,10 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
 	            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
 	            node.customize ["modifyvm",:id,"--groups","/ospf"]
 	        end
-	        v.vm.provision "shell", 
-	        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	        if s==1
+	        	v.vm.provision "shell", 
+	        	inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	       	end
 	    end
 	    config.vm.define "ospf-r1-l3" do |v|
 	        v.vm.box = vm_box
@@ -71,8 +78,10 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
 	            node.customize ["storageattach", :id, "--storagectl", "SATA Controller", "--port", "0", "--device", "0", "--nonrotational", "on"]
 	            node.customize ["modifyvm",:id,"--groups","/ospf"]
 	        end
-	        v.vm.provision "shell", 
-	        inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	        if s==1
+	        	v.vm.provision "shell", 
+	        	inline: "/bin/sh /vagrant/scripts/routers_part1.sh"
+	    	end
 	    end
 	end
     if c==1
